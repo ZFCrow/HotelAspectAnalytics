@@ -1,0 +1,34 @@
+ChatGPT
+"
+
+2020: 
+Cleaniness: Positive(0) vs Negative(0)
+Services: Positive(1) vs Negative(0)
+Value: Positive(0) vs Negative(0)
+Amenities: Positive(0) vs Negative(0)
+Location: Positive(0) vs Negative(0)
+General: Positive(0) vs Negative(0)
+
+2021: 
+Cleaniness: Positive(11) vs Negative (2)
+Services: Positive(167) vs Negative(10)
+Value: Positive(41) vs Negative (4)
+Amenities: Positive(86) vs Negative(4)
+Location: Positive(18) vs Negative(0)
+General: Positive(39) vs Negative (1)
+
+2022: 
+Cleaniness: Positive(26) vs Negative (6)
+Services: Positive(135) vs Negative(15)
+Value: Positive(52) vs Negative (1)
+Amenities: Positive(103) vs Negative(0)
+Location: Positive(55) vs Negative(1)
+General: Positive(46) vs Negative (2)
+
+2023: 
+Cleaniness: Positive(7) vs Negative (1)
+Services: Positive(49) vs Negative(6)
+Value: Positive(11) vs Negative (1)
+Amenities: Positive(42) vs Negative(0)
+Location: Positive(38) vs Negative(0)
+General: Positive(19) vs Negative (4)"

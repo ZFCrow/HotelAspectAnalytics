@@ -1,0 +1,26 @@
+ChatGPT
+" from the dataset.
+
+Year 2021:
+Cleaniness:  Positive 5, Negative 1
+Services: Positive 30, Negative 3
+Value: Positive 5, Negative 0
+Amenities: Positive 6, Negative 0
+Location: Positive 3, Negative 0
+General: Positive 11, Negative 0
+
+Year 2022:
+Cleaniness:  Positive 33, Negative 2
+Services: Positive 340, Negative 10
+Value: Positive 57, Negative 1
+Amenities: Positive 106, Negative 1
+Location: Positive 73, Negative 1
+General: Positive 76, Negative 5
+
+Year 2023:
+Cleaniness:  Positive 6, Negative 0
+Services: Positive 147, Negative 3
+Value: Positive 19, Negative 0
+Amenities: Positive 33, Negative 0
+Location: Positive 40, Negative 0
+General: Positive 35, Negative 0"

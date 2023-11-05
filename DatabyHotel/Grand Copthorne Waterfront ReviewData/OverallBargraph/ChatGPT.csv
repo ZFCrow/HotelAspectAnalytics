@@ -1,0 +1,6 @@
+ChatGPT
+".
+
+In the given dataframe, there were 72 rows of data with 4 columns. Each row consists of a year, a positivity number, and a category.
+
+The report states that for each year in the dataframe, the number of positives against negatives can be found. For 2018, there were 5 positives and 3 negatives. For 2019, there were 9 positives and 1 negatives. For 2020, there were 13 positives and 0 negatives. For 2021, there were 8 positives and 3 negatives. For 2022, there were 11 positives and 2 negatives. Lastly for 2023, there were 29 positives and 2 negatives."

@@ -1,0 +1,3 @@
+year,Cleaniness,Cleaniness_POS,Cleaniness_NEG,CleaninessNumbers,Amenities,Amenities_POS,Amenities_NEG,AmenitiesNumbers,Services,Services_POS,Services_NEG,ServicesNumbers,Value,Value_POS,Value_NEG,ValueNumbers,Location,Location_POS,Location_NEG,LocationNumbers,General,General_POS,General_NEG,GeneralNumbers
+2023,62.238888888888894,38.36666666666667,,1/1,0,0,0,0/0,59.27069988734462,37.713272512088295,,4/4,0,0,0,0/0,53.78250976964212,28.654224452018568,,2/2,0,0,0,0/0
+General,62.238888888888894,,,1/1,0,,,0/0,59.27069988734462,,,4/4,0,,,0/0,53.78250976964212,,,2/2,0,,,0/0

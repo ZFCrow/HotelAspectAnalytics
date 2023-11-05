@@ -1,0 +1,294 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<style>
+    .bottomdiv {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+    }
+</style>
+
+{% endblock %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+<body id="mainbody">
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-8" style="margin-top:1%;">
+                <div style="text-align: center;">
+                    <label for="selhotel">Search for the reviews you are interested in</label>
+                </div>
+
+                <!-- <select id="selhotel" name="Hotel list" class="form-select" aria-label="Default select example"
+                    onchange="updateSelected(event)" style="display:block;margin: 0 auto;text-align: center;">
+                    <option selected></option>
+                    {% for hotel in hotels %}
+                    <option value="{{hotel}}">{{hotel}}</option>
+                    {% endfor %}
+                </select> -->
+
+                <!-- instead of dropdown, we using searchbar -->
+                <div class="search-container">
+                    <div class="search-form">
+                        <i class='bx bx-search-alt'></i>
+                        <input type="text" id="searchInput" name="Hotel search" list="hotels" class="form-control"
+                            aria-label="Hotel search" style="display:block;margin: 0 auto;"
+                            placeholder="Type here to search...">
+                        <datalist id="hotels">
+                            {% for hotel in hotels %}
+                            <option value="{{hotel}}">{{hotel}}</option>
+                            {% endfor %}
+                        </datalist>
+                        <button type="button" onclick="updateSelected()">Search</button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-4">
+                <form class='updateDBForm' action="/updateDatabase/" method="post">
+                    <button id="updateDB" name="updateDB" type="submit" class="button-38" onclick="update()">
+                        Update Database
+                    </button>
+                </form>
+                <!-- Modal Alert -->
+                <div class="modal fade" id="modalAlert" tabindex="-1" role="dialog" aria-labelledby="modalAlertLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header" style="background-color: #F9D7DA;color:#721C23;">
+                                <h5 class="modal-title" id="modalAlertLabel">Alert</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" id="modalAlertMessage">
+                                Please enter a valid number.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+                <button class="button-38" id="secondHotel" name="secondHotel" type="button" onclick="secondHotel()">
+                    Compare Hotels
+                </button>
+            </div>
+        </div>
+        <br>
+    </div>
+    <br>
+
+    <p id="res" style="text-align: center;"></p>
+
+    <div style="margin-top:1%; margin-bottom: 1%;">
+        <select id="years" name="Prediction Years" class="form-select" aria-label="Default select example"
+            style="display:block;margin: 0 auto;text-align: center;" hidden>
+            <option value="1" selected>Select the number of years to predict</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+    </div>
+
+
+    <!-- <button id="analyse" type="submit" class="btn btn-primary" hidden onclick="flow1()">Analyse</button> -->
+    <div id="btn-container">
+        <form class='analyseForm' action="/analyse/" method="post" onsubmit="return checksubmit()">
+            <button id="analyse" name="analyse" type="submit" class="button-40" hidden onclick="runFlow1()">
+                Analyse
+            </button>
+        </form>
+
+        <!-- <form action="/" method="post">
+                <input type="hidden" name="value" value="{{[i]}}">
+                <button id="analyse" class="btn btn-primary" type="submit" name="submit_btn">Analyse</button>
+            </form> -->
+        <form class='analyseForm' action="/scrapAnalyse/" method="post">
+            <button id="scrap_analyse" name="scrap_analyse" type="submit" class="button-40" hidden
+                style="margin-left: 10px;" onclick="runFlow2()">
+                Scrap & Analyse
+            </button>
+        </form>
+    </div>
+
+    <div>
+        <select id="sel2ndhotel" name="Hotel list" class="form-select" aria-label="Default select example"
+            onchange="compareSelected(event)" style="display:block;margin: 0 auto;text-align: center;" hidden>
+            <option value="None" selected></option>
+            {% for hotel in hotels %}
+            <option value="{{hotel}}">{{hotel}}</option>
+            {% endfor %}
+        </select>
+        <div id="btn-container" style="margin-top:3%;">
+            <form class='compareForm' action="/compare/" method="post">
+                <button class="button-38" id="compareHotels" name="compareHotels" type="submit" onclick="validate()"
+                    hidden> Compare </button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- add a loading button that appears when user submits the form -->
+    <div class="loader"></div>
+
+    <!-- display a countdown timer that the user set after clicking the update database button -->
+    <div id="countdown" style="text-align: center;"></div>
+
+    <p id="act"></p>
+
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+
+    <script>
+        function updateSelected() {
+
+            input = document.getElementById('searchInput').value
+            document.getElementById('analyse').hidden = false;
+            document.getElementById('analyse').value = input;
+            document.getElementById('years').hidden = false;
+            document.getElementById('scrap_analyse').hidden = false;
+            document.getElementById('scrap_analyse').value = input;
+            document.getElementById('res').innerHTML = 'You have selected ' + input + ' to analyse the hotel reviews.';
+
+            index = '{{hotels}}'.indexOf(input)
+            end_index = '{{hotels}}'.indexOf(",", index)
+
+            sliced = ('{{hotels}}'.slice(index, end_index - 5));
+
+            if (input === sliced) {
+                document.getElementById('secondHotel').disabled = false;
+                document.getElementById('secondHotel').style.backgroundColor = 'white';
+                document.getElementById('secondHotel').style.cursor = 'pointer';
+
+                document.getElementById('scrap_analyse').disabled = false;
+                document.getElementById('scrap_analyse').style.backgroundColor = 'white';
+                document.getElementById('scrap_analyse').style.cursor = 'pointer';
+            } else {
+                document.getElementById('secondHotel').disabled = true;
+                document.getElementById('secondHotel').style.backgroundColor = 'grey';
+                document.getElementById('secondHotel').style.cursor = 'not-allowed';
+
+                document.getElementById('scrap_analyse').disabled = true;
+                document.getElementById('scrap_analyse').style.backgroundColor = 'grey';
+                document.getElementById('scrap_analyse').style.cursor = 'not-allowed';
+            }
+
+            document.getElementById('sel2ndhotel').hidden = true;
+            document.getElementById('compareHotels').hidden = true;
+            //document.getElementById('compareHotels').value = input;
+        }
+
+        function update() {
+            let input = prompt("Enter a timer amount:")
+            if (input !== null && !isNaN(input)) {
+                document.getElementById('updateDB').value = input;
+            } else {
+                // Show the modal alert
+                $('#modalAlertMessage').text("Please enter a valid number.");
+                $('#modalAlert').modal('show');
+            }
+        }
+
+        function secondHotel() {
+            document.getElementById('res').innerHTML = 'You have selected ' + document.getElementById('compareHotels').value + ' to analyse the hotel reviews.'
+                + "<br />" + 'Please select a second hotel to compare.';
+
+            document.getElementById('analyse').hidden = true;
+            document.getElementById('scrap_analyse').hidden = true;
+            document.getElementById('years').hidden = true;
+
+            document.getElementById('sel2ndhotel').hidden = false;
+            document.getElementById('secondHotel').disabled = true;
+            document.getElementById('secondHotel').style.backgroundColor = 'grey';
+        }
+
+        function compareSelected(event) {
+            if (event.target.value == "") {
+                alert("Please select a hotel");
+                document.getElementById('compareHotels').hidden = true;
+            } else {
+                document.getElementById('compareHotels').hidden = false;
+                document.getElementById('compareHotels').value = event.target.value
+            }
+        }
+
+        function validate() {
+            hotel2 = document.getElementById('compareHotels').value
+            hotel1 = document.getElementById('searchInput').value
+            document.getElementById('compareHotels').value = hotel1 + ":" + hotel2
+        }
+
+        function runFlow1() {
+
+            years = document.getElementById('years').value
+            analyse = document.getElementById('analyse')
+            analyse.value = years + ":" + analyse.value;
+        }
+
+        function checksubmit() {
+            //check input value
+            inputvalue = document.getElementById('searchInput').value;
+            //console.log(document.getElementById('searchInput').value);
+            if (inputvalue == "") {
+                alert("Please select a hotel");
+                return false;
+            }
+            return true;
+        }
+
+        function runFlow2() {
+            years = document.getElementById('years').value
+            scrap = document.getElementById('scrap_analyse')
+            scrap.value = years + ":" + scrap.value;
+        }
+
+        var commonForms = document.querySelectorAll(['.analyseForm', '.updateDBForm', '.compareForm']);
+        var loader = document.querySelector('.loader');
+
+
+        commonForms.forEach(function (form) {
+            form.addEventListener('submit', function () {
+                // display if the inputvalue is not empty, but dont checksubmit for updateDBForm
+                if (form.className !== 'updateDBForm') {
+                    if (checksubmit()) {
+                        loader.style.display = 'block';
+                    }
+                }
+
+                if (form.className == 'updateDBForm') {
+                    timer = document.getElementById('updateDB').value;
+                    //refresh the text every 1 second
+                    var x = setInterval(function () {
+                        
+                        document.getElementById('countdown').innerHTML = "Updating database in " + timer + " seconds";
+                        timer--;
+                        if (timer < 0) {
+                            clearInterval(x);
+                            document.getElementById('countdown').innerHTML = "Stopping the DB scraping right now, kindly wait a while!";
+                        }
+                    }, 1000);
+
+                }
+            });
+        });
+        // if user clicks back button, the loader will disappear
+        window.addEventListener('pageshow', function () {
+            loader.style.display = 'none';
+        });
+
+        window.onpageshow = function (event) {
+            if (event.persisted) {
+                window.location.reload(); //reload page if it has been loaded from cache
+            }
+        };
+    </script>
+
+</body>
+
+{% endblock %}

@@ -1,0 +1,190 @@
+/* CSS */
+@font-face {
+  font-family: 'Gabarito';
+  src: url(../fonts/Gabarito/static/Gabarito-Regular.ttf)
+}
+
+.navbar-brand {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.55rem !important;
+  font-weight: bold;
+}
+
+body{
+  font-family: 'Work Sans', sans-serif;
+}
+
+#mainbody{
+  background-color: #f4f1de;
+}
+
+button{
+  font-family: inherit;
+}
+
+.button-38 {
+  background-color: #FFFFFF;
+  border: 0;
+  border-radius: .5rem;
+  box-sizing: border-box;
+  color: #111827;
+  font-family: "Inter var", ui-sans-serif, system-ui, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  padding: .75rem 1rem;
+  text-align: center;
+  text-decoration: none #D1D5DB solid;
+  text-decoration-thickness: auto;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-38:hover {
+  background-color: rgb(249, 250, 251);
+}
+
+.button-38:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.button-38:focus-visible {
+  box-shadow: none;
+}
+
+#btn-container {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+/* CSS */
+.button-40 {
+  background-color: #FFFFFF;
+  border: 0;
+  border-radius: .5rem;
+  box-sizing: border-box;
+  color: #111827;
+  font-family: "Inter var", ui-sans-serif, system-ui, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  padding: .75rem 1rem;
+  text-align: center;
+  text-decoration: none #D1D5DB solid;
+  text-decoration-thickness: auto;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-40:hover {
+  background-color: #e0d8d3;
+}
+
+.button-40:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.button-40:focus-visible {
+  box-shadow: none;
+}
+
+/*CSS*/
+.plots {
+  width: 100%;
+  height: 100%;
+  -webkit-transform: scale(.83);
+  -ms-transform: scale(.83);
+  transform: scale(.83);
+  -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  transform-origin: 0 0;
+  margin: 0 0 -160px 0;
+}
+
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  position: absolute;
+  display: none;
+  top: 50%;
+  left: 50%;
+  margin-top: -60px;
+  margin-left: -60px;
+
+  /* -webkit-animation: spin 2s linear infinite;  Safari */
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.reviewbtn,
+.downloadbtn {
+  border: none;
+  background: none;
+  padding-top: 6px;
+}
+
+.page-item.active .page-link{
+  background-color: #3d405b !important;
+  border-color: #3d405b !important; 
+}
+
+/*Search Bar*/
+.search-container{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-form{
+  background: #ffff;
+  width: 600px;
+  height: 55px;
+  display: flex;
+}
+
+.search-form input{
+  flex: 1;
+  border: none;
+  outline: none;
+}
+
+.search-form button{
+  background: grey;
+  padding: 10px 50px;
+  border: none;
+  outline: none;
+  color: #fff;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.search-form .bx-search-alt{
+  align-self: center;
+  padding: 10px 20px;
+  color: #777;
+}
+

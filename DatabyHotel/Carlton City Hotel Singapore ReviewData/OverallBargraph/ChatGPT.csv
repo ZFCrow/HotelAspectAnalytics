@@ -1,0 +1,14 @@
+ChatGPT
+" and category
+
+Positive vs. Negative Counts by Category
+
+Year   Category     Positive    Negative
+2015  Cleaniness        1          0
+2015  Services         14          0
+2015  Value             8          0
+2023  Amenities         0          1
+2023  Location          4          0
+2023  General           5          0
+
+Overall, the data from 2015-2023 shows a strong trend of positive reviews for all the categories, with most categories having more positives than negatives. Cleaniness had the highest number of positives (1) while Amenities had the highest number of negatives (1)."

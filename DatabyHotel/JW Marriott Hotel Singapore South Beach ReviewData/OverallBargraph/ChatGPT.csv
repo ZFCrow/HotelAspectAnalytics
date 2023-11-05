@@ -1,0 +1,34 @@
+ChatGPT
+" and category of the table
+
+Year  Category     Positive    Negative
+2019  Cleaniness       1            1
+     Services         12            0
+     Value            0            0
+     Amenities        4            0
+     Location         3            0
+     General          3            0       
+2020  Cleaniness       5            0
+     Services         99            6
+     Value            7            0
+     Amenities        32            1
+     Location         7            0
+     General          24            1    
+2021  Cleaniness       19           3
+     Services        187            2
+     Value            7            2
+     Amenities        34            0
+     Location         5            0
+     General          43            1    
+2022  Cleaniness       0            0
+     Services        152            2
+     Value           11            2
+     Amenities        49            1
+     Location        21            0
+     General          37            0 
+2023  Cleaniness       3            1
+     Services        127            3
+     Value            6            0
+     Amenities        41            0
+     Location        13            2
+     General          37            1"

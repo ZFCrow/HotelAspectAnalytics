@@ -1,0 +1,466 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+    integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css">
+<link rel="stylesheet" type="text/css"
+    href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.16.0/extensions/filter-control/bootstrap-table-filter-control.css">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<link href="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+{% endblock %}
+
+{% block body %}
+<br>
+<div class="shadow p-3 mb-5 bg-body-tertiary rounded"
+    style="padding: 0.7rem !important; margin: 0 auto;max-width: 500px;">
+    <h4 value="{{hotel_name}}" style="text-align: center; margin-top: 10px;">{{hotel_name}}</h4>
+</div>
+<!-- <div margin: auto> 
+        <img src="{{plot_image}}" width="600">
+    </div>  -->
+
+<div id="btn-container">
+    <h4 style="text-align: center; margin-top: 10px;">Review Analytics</h4>
+    <form class='nextForm' action="/review_summary/" method="post">
+        <button class="reviewbtn" name="next" value="{{hotel_name}}" type="submit"><i
+                class='bx bxs-right-arrow-square bx-md' style="font-size:2.75rem !important;"></i></button>
+    </form>
+</div>
+
+<div>
+    <h4 id="graphtitle" style="text-align: center; margin-top: 30px;">Overall Regression</h4>
+</div>
+
+<div id="regression" class="plots">
+    {{regression|safe}}
+</div>
+
+<div id="bargraph" class="plots" hidden>
+    {{bargraph|safe}}
+</div>
+
+<div id="regression_pos" class="plots" hidden>
+    {{regressionPos|safe}}
+</div>
+
+<div id="regression_neg" class="plots" hidden>
+    {{regressionNeg|safe}}
+</div>
+
+<div id="btn-container">
+    <button id="toggle" type="button" class="button-40" onclick="changegraph()">
+        Toggle to Bar Graph
+    </button>
+    &nbsp;&nbsp;
+
+    <!--! Button to trigger the modal -->
+    <button type="button" id='cmsurvey' class="button-40" data-bs-toggle="modal" data-bs-target="#myModal">Category
+        Classifier CM Survey</button>
+
+    <!--! Bootstrap Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #F5F5F5;">
+                    <h5 class="modal-title" id="exampleModalLabel">Category Classifier CM Survey</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        style="border: none; outline: none; background-color: transparent;"><i
+                            class="bx bx-x bx-md"></i></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Modal content here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" aria-label="Close"
+                        data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="sendRequestButton">Send Request</button>
+                </div>
+            </div>
+        </div>
+    </div>
+&nbsp;&nbsp;
+    <form action="/download/" method="post">
+        <button class="downloadbtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class='bx bxs-download bx-md ' style="font-size:2.40rem !important;"></i>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <button id="download" name="download" type="submit" class="dropdown-item"
+                value="{{hotel_name}}:OverallRegression">Download
+                displayed graph</button>
+            <button id="download" name="download" type="submit" class="dropdown-item"
+                value="{{hotel_name}}:polarityCM.txt">Download
+                sentiment accuracy report</button>
+        </div>
+    </form>
+
+
+</div>
+<br>
+
+<div class="card" id="subplotCard" style="margin:13px;">
+    <div class="card-body" id="subplotCardBody">
+        <p id="summaryRegression">
+            {{summary_regression|safe}}
+        </p>
+    </div>
+</div>
+
+<div class="card" id="bargraphCard" style="margin:13px;" hidden>
+    <div class="card-body" id="bargraphCardBody" hidden>
+        <p id="summaryBargraph" hidden>
+            {{summary_bargraph|safe}}
+        </p>
+    </div>
+</div>
+<br>
+
+<div class="card" id="posCard" style="margin:13px;" hidden>
+    <div class="card-body" id="posCardBody" hidden>
+        <p id="summaryRegressionPos" hidden>
+            {{summary_regression_pos|safe}}
+        </p>
+    </div>
+</div>
+<br>
+
+<div class="card" id="negCard" style="margin:13px;" hidden>
+    <div class="card-body" id="negCardBody" hidden>
+        <p id="summaryRegressionNeg" hidden>
+            {{summary_regression_neg|safe}}
+        </p>
+    </div>
+</div>
+
+
+
+
+<!-- add a loading button that appears when user submits the form -->
+<div class="loader"></div>
+
+<script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+<script>
+    function changegraph() {
+        var regression = document.getElementById('regression')
+        var bargraph = document.getElementById('bargraph')
+        var regression_pos = document.getElementById('regression_pos')
+        var regression_neg = document.getElementById('regression_neg')
+        var summaryreg = document.getElementById('summaryRegression')
+        var summarybar = document.getElementById('summaryBargraph')
+        var summaryregpos = document.getElementById('summaryRegressionPos')
+        var summaryregneg = document.getElementById('summaryRegressionNeg')
+        var bargraphCard = document.getElementById('bargraphCard')
+        var subploatCard = document.getElementById('subplotCard')
+        var posCard = document.getElementById('posCard')
+        var negCard = document.getElementById('negCard')
+        var bargraphCB = document.getElementById('bargraphCardBody')
+        var subploatCB = document.getElementById('subplotCardBody')
+        var posCB = document.getElementById('posCardBody')
+        var negCB = document.getElementById('negCardBody')
+
+        var toggle = document.getElementById('toggle')
+        var download = document.getElementById('download')
+        var graphtitle = document.getElementById('graphtitle')
+
+        if (!regression_neg.hidden) {
+            //Display regression_overall
+            regression.hidden = false
+            bargraph.hidden = true
+            regression_pos.hidden = true
+            regression_neg.hidden = true
+
+            summaryreg.hidden = false
+            summarybar.hidden = true
+            summaryregpos.hidden = true
+            summaryregneg.hidden = true
+
+            bargraphCard.hidden = true
+            subploatCard.hidden = false
+            posCard.hidden = true
+            negCard.hidden = true
+            bargraphCB.hidden = true
+            subploatCB.hidden = false
+            posCB.hidden = true
+            negCB.hidden = true
+
+            download.value = '{{hotel_name}}' + ':' + "OverallRegression"
+            toggle.innerHTML = "Toggle to Bar Graph"
+            graphtitle.innerHTML = "Overall Regression"
+
+        } else if (!regression.hidden) {
+            //Display bargraph
+            regression.hidden = true
+            bargraph.hidden = false
+            regression_pos.hidden = true
+            regression_neg.hidden = true
+
+            summaryreg.hidden = true
+            summarybar.hidden = false
+            summaryregpos.hidden = true
+            summaryregneg.hidden = true
+
+            bargraphCard.hidden = false
+            subploatCard.hidden = true
+            posCard.hidden = true
+            negCard.hidden = true
+            bargraphCB.hidden = false
+            subploatCB.hidden = true
+            posCB.hidden = true
+            negCB.hidden = true
+
+            download.value = '{{hotel_name}}' + ':' + "OverallBarGraph"
+            toggle.innerHTML = "Toggle to Positive Regression"
+            graphtitle.innerHTML = "Bar Graph"
+
+        } else if (!bargraph.hidden) {
+            //Display regression positive
+            regression.hidden = true
+            bargraph.hidden = true
+            regression_pos.hidden = false
+            regression_neg.hidden = true
+
+            summaryreg.hidden = true
+            summarybar.hidden = true
+            summaryregpos.hidden = false
+            summaryregneg.hidden = true
+
+            bargraphCard.hidden = true
+            subploatCard.hidden = true
+            posCard.hidden = false
+            negCard.hidden = true
+            bargraphCB.hidden = true
+            subploatCB.hidden = true
+            posCB.hidden = false
+            negCB.hidden = true
+
+            download.value = '{{hotel_name}}' + ':' + "OverallRegression_POS"
+            toggle.innerHTML = "Toggle to Negative Regression"
+            graphtitle.innerHTML = "Positive Regression"
+
+        } else if (!regression_pos.hidden) {
+            //Display regression negative
+            regression.hidden = true
+            bargraph.hidden = true
+            regression_pos.hidden = true
+            regression_neg.hidden = false
+
+            summaryreg.hidden = true
+            summarybar.hidden = true
+            summaryregpos.hidden = true
+            summaryregneg.hidden = false
+
+            bargraphCard.hidden = true
+            subploatCard.hidden = true
+            posCard.hidden = true
+            negCard.hidden = false
+            bargraphCB.hidden = true
+            subploatCB.hidden = true
+            posCB.hidden = true
+            negCB.hidden = false
+
+            download.value = '{{hotel_name}}' + ':' + "OverallRegression_NEG"
+            toggle.innerHTML = "Toggle to Overall Regression"
+            graphtitle.innerHTML = "Negative Regression"
+        }
+    }
+
+    var commonForms = document.querySelectorAll('.nextForm');
+    var loader = document.querySelector('.loader');
+
+
+    commonForms.forEach(function (form) {
+        form.addEventListener('submit', function () {
+            loader.style.display = 'block';
+        });
+    });
+    // if user clicks back button, the loader will disappear
+    window.addEventListener('pageshow', function () {
+        loader.style.display = 'none';
+    });
+
+    //  =============================================CM SURVEY =========================================================================================================
+    //  =============================================CM SURVEY =========================================================================================================
+    //instead of onclick load, this should happen when i reach the page, 
+
+    //document.getElementById('cmsurvey').addEventListener('click', function () {
+    window.onload  = function () {
+
+        const categories = ['Cleanliness', 'General', 'Location', 'Services', 'Value', 'Amenities'];
+        // Get hotel name
+        const hotelName = '{{hotel_name}}';
+        // Make an AJAX request to the Flask backend
+        fetch('/CMQuestions?hotel_name=' + hotelName, {
+            method: 'GET',
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the DataFrame
+                const modalContent = document.querySelector('.modal-body');
+                modalContent.innerHTML = ''; // Clear the modal content
+                console.log(data);
+                //There 2 columns, first column is 'desc', second column is 'Category', loop through each row
+                data.forEach(row => {
+                    // 'row' represents a single row in the DataFrame
+                    const description = row.desc;
+                    const predictedCategory = row.Category;
+                    // You can now work with 'description' and 'predictedCategory' for each row
+                    console.log("Description: " + description);
+                    console.log("Predicted Category: " + predictedCategory);
+                    // Create a new paragraph element
+                    const p = document.createElement('p');
+                    // Set the inner text of the paragraph to be the description and predicted category
+                    p.innerText = description;
+
+                    //display a dropdown beside each row to allow user to select the actual category
+                    const select = document.createElement('select');
+                    select.setAttribute('class', 'form-select');
+                    select.setAttribute('aria-label', 'Default select example');
+                    select.setAttribute('id', 'select');
+                    select.setAttribute('name', 'select');
+                    select.setAttribute('style', 'width: 200px; margin-left: 10px; margin-right: 10px;margin-bottom:20px;');
+
+                    
+                    //add one option as None
+                    const optionNone = document.createElement('option');
+                    optionNone.setAttribute('value', 'None');
+                    optionNone.innerText = 'None';
+                    select.appendChild(optionNone);
+                    
+                    //create an option for each category
+                    categories.forEach(category => {
+                        const option = document.createElement('option');
+                        option.setAttribute('value', category);
+                        option.innerText = category;
+                        select.appendChild(option);
+                    })
+
+                
+
+      
+
+
+
+
+                    // Append the paragraph to the modal content
+                    modalContent.appendChild(p);
+                    // Append the select to the modal content
+                    modalContent.appendChild(select);
+
+                    // Add an <hr> element after the paragraph and select
+                    const hr = document.createElement('hr');
+                    modalContent.appendChild(hr);
+
+                    //link the seleect to the p 
+                    select.addEventListener('change', function () {
+                        p.innerText = description + '---' + select.value;
+                    }
+
+                    )
+
+                })
+
+
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    };
+
+
+
+    //CHANGE the modal behavior, send a request to the backend with the options selected by the user and the desc and category of the review 
+    document.addEventListener("DOMContentLoaded", function () {
+        // Add a click event listener to the custom "Send Request" button
+        const sendRequestButton = document.getElementById('sendRequestButton');
+        sendRequestButton.addEventListener('click', function () {
+            // Perform actions to send a request to the backend
+            sendRequestToBackend();
+            //check if download button exists, if it does, remove it
+            const downloadButton = document.getElementById('downloadButton');
+            if (downloadButton) {
+                downloadButton.remove();
+            }
+
+            //change text to 'Request Sent, kindly wait for download button', disable the button
+            sendRequestButton.innerText = 'Request Sent, kindly wait for download button';
+            sendRequestButton.disabled = true;
+
+        });
+    });
+
+    function sendRequestToBackend() {
+        //get all the paragraphs in the modal body and send it to the backend
+        const modalContent = document.querySelector('.modal-body');
+        //GET THE INNER TEXT OF ALL THE PARAGRAPHS
+        const paragraphs = [];
+        modalContent.childNodes.forEach(child => {
+            if (child.nodeName === 'P') {
+                paragraphs.push(child.innerText);
+            }
+        })
+        console.log(' IM HERE')
+        console.log(paragraphs);
+
+        fetch('/CMAnswers', {
+            method: 'POST',
+            //send the paragraph and the hotel name
+            body: JSON.stringify({
+                'paragraphs': paragraphs,
+                'hotel_name': '{{hotel_name}}'
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8'
+            }
+        })
+
+            .then(response => response.blob())
+            .then(blob => {
+
+                //create a button to download the file
+                const downloadButton = document.createElement('button');
+                downloadButton.setAttribute('class', 'btn btn-primary');
+                downloadButton.setAttribute('id', 'downloadButton');
+                downloadButton.innerText = 'Download';
+                //append the button to the modal content
+                modalContent.appendChild(downloadButton);
+
+                //load the file into the button 
+                downloadButton.addEventListener('click', function () {
+                    const url = window.URL.createObjectURL(blob);
+                    // Create an anchor element for the download
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'CM.txt'; // Provide the desired file name and extension
+                    a.style.display = 'none';
+
+                    // Append the anchor element to the document
+                    document.body.appendChild(a);
+
+                    // Trigger a click event on the anchor to start the download
+                    a.click();
+
+                    // Remove the anchor element
+                    window.URL.revokeObjectURL(url);
+                    a.remove();
+                })
+
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+    //  =============================================CM SURVEY =========================================================================================================
+    //  =============================================CM SURVEY =========================================================================================================
+</script>
+</body>
+
+{% endblock %}

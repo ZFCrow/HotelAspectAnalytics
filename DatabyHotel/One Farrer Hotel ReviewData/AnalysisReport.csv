@@ -1,0 +1,3 @@
+year,Cleaniness,Cleaniness_POS,Cleaniness_NEG,CleaninessNumbers,Amenities,Amenities_POS,Amenities_NEG,AmenitiesNumbers,Services,Services_POS,Services_NEG,ServicesNumbers,Value,Value_POS,Value_NEG,ValueNumbers,Location,Location_POS,Location_NEG,LocationNumbers,General,General_POS,General_NEG,GeneralNumbers
+2023,0,0,0,0/0,0,0,0,0/0,66.98941798941799,48.60846560846561,,3/3,0,0,0,0/0,0,0,0,0/0,0,0,0,0/0
+General,0,,,0/0,0,,,0/0,66.98941798941799,,,3/3,0,,,0/0,0,,,0/0,0,,,0/0

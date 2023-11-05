@@ -1,0 +1,16 @@
+ChatGPT
+" and every single category.
+
+The report generated from this dataframe reveals that the number of positives and negatives in each year and category can be seen as follows:
+
+In 2018, the positivities and negatives in the Cleaniness category were 0 and 0 respectively. In the Services category, the number of positives were 15 while the number of negatives were 0. In the Value category, all the entries were positivities (0).
+
+In 2019, the positivities and negatives in the Cleaniness category were 32 and 0 respectively. In the Services category, the number of positives were 18 while the number of negatives were 0. In the Value category, all the entries were positivities (3).
+
+In 2020, the positivities and negatives in the Cleaniness category were 23 and 12 respectively. In the Services category, the number of positives were 8 while the number of negatives were 1. In the Value category, all the entries were positivities (6).
+
+In 2021, the positivities and negatives in the Cleaniness category were 4 and 0 respectively. In the Services category, the number of positives were 5 while the number of negatives were 0. In the Value category, the number of positives and negatives were 2 and 0 respectively.
+
+In 2022, the positivities and negatives in the Cleaniness category were 5 and 0 respectively. In the Services category, the number of positives were 10 while the number of negatives were 0. In the Value category, the number of positives and negatives were 3 and 0 respectively.
+
+In 2023, the positivities and negatives in the Cleaniness category were 8 and 0 respectively. In the Services category, the number of positives were 7 while the number of negatives were 0. In the Value category, the number of positives and negatives were 5 and 6 respectively. In the Amenities category, the number of positives and negatives were 0 and 1 respectively. Lastly, in the Location category, the number of positives and negatives were 6 and 1 respectively."
