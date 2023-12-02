@@ -6,8 +6,10 @@ Ensure that you have a openai and google account  and insert your own api keys r
 
 # System Diagram 
 
-![systemDiagram](https://github.com/ZFCrow/HotelAspectAnalytics/assets/113918404/4486e6c1-126b-4557-83e4-6966587cdf0f)
 
+![systemDiagram](https://github.com/ZFCrow/HotelAspectAnalytics/assets/113918404/83e9d034-2e83-4498-9bbd-c8bb0ea75542)
+
+![sysdia2](https://github.com/ZFCrow/HotelAspectAnalytics/assets/113918404/ea102b1f-9883-42c0-8f39-abcd4bba913b)
 
 
 # video explanation
