@@ -31,9 +31,9 @@
                 <!-- IF SUMMARY == 'PAYWALL FUNCTION', i put a image here instead -->
 
                 <!-- {{summary|safe}} -->
-                {% if summary == 'paywall function' %}
+                {% if summary == 'apikey notfound' %}
 
-                <img src="{{ url_for('static', filename='images/qr1.jpg') }}" alt="Image" style="width: 200px; height: 200px; border: 1px solid #000;">
+                <img src="{{ url_for('static', filename='images/qr.jpg') }}" alt="Image" style="width: 200px; height: 200px; border: 1px solid #000;">
 
                 {% else %}
                 {{ summary|safe }}

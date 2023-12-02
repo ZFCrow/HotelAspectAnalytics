@@ -7,6 +7,7 @@ import path
 import sys
 import os
 
+
 # directory reach
 directory = path.Path(__file__).abspath()
  
@@ -14,7 +15,7 @@ directory = path.Path(__file__).abspath()
 sys.path.append(directory.parent.parent)
 import Fullflow
 import confusionmatrix
-
+import constants 
 app = Flask(__name__, template_folder='frontend_template')
 
 @app.route('/')
@@ -116,21 +117,25 @@ def flow6():
     try:
         qr_loc = path.Path(__file__).abspath().parent.parent + r'\frontend\static\images\qr.jpg'
         qr1_loc = path.Path(__file__).abspath().parent.parent + r'\frontend\static\images\qr1.jpg'
-        if qr_loc.exists():
-            #change it to qr1.jpg
-            qr_loc.rename(qr_loc.parent / f'qr1.jpg')
-            raise
+        # if qr_loc.exists():
+        #     #change it to qr1.jpg
+        #     qr_loc.rename(qr_loc.parent / f'qr1.jpg')
+        #     raise
         
-        if qr1_loc.exists():
-            #change it to qr.jpg and proceed on, so user needs to pay next time, pass through this time
-            qr1_loc.rename(qr1_loc.parent / f'qr.jpg')
+        # if qr1_loc.exists():
+        #     #change it to qr.jpg and proceed on, so user needs to pay next time, pass through this time
+        #     qr1_loc.rename(qr1_loc.parent / f'qr.jpg')
+        
+        if constants.googleNLPAPIKEY != None:
             
         
-        response = Fullflow.flow6(input)
-        print(response.to_dict('records'))
-        openai_response, accuracy_value = hotel.df_to_list_sum(response)
+            response = Fullflow.flow6(input)
+            print(response.to_dict('records'))
+            openai_response, accuracy_value = hotel.df_to_list_sum(response)
+        else: #! it equals to none so we raise 
+            raise 
     except:
-        openai_response,accuracy_value = "paywall function", "you know what to do(We are kidding, please reload the page!)"
+        openai_response,accuracy_value = "apikey notfound", "google nlp apikey notfound so there will not be a review summary generated! "
     
     print(openai_response)
     print(accuracy_value)
