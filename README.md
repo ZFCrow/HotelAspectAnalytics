@@ -13,7 +13,7 @@ python app.py
 proceed to http://127.0.0.1:5000/ to view our project
 
 # Restrictions 
-Ensure that you have a openai and google account  and insert your own api keys respectively.
+Please do ensure that you have a openai and google account  and insert your own api keys respectively in constants.py.
 
 # System Diagram 
 
