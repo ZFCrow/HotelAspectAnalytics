@@ -12,7 +12,7 @@ import os
 directory = path.Path(__file__).abspath()
  
 # setting path
-sys.path.append(directory.parent.parent)
+sys.path.append(directory.parent.parent) 
 import Fullflow
 import confusionmatrix
 import constants 
@@ -20,7 +20,21 @@ app = Flask(__name__, template_folder='frontend_template')
 
 @app.route('/')
 def index():
-    hotels = hotel.hotel_list()
+    try:
+        print(os.getcwd())
+        df = pd.read_csv('tripadvisor.csv')
+       
+    except:
+
+        print ('tripadvisor.csv not found in hotelaspectanalytics folder')
+
+
+    try:
+        hotels = hotel.hotel_list()
+    except:
+        print ('tripadvisor.csv not found')
+        hotels = []
+
     return render_template("index.html",hotels = hotels) 
 
 
@@ -38,6 +52,8 @@ def flow1():
     hotelnamePath = f'{hotelname} ReviewData'
     if hotelnamePath not in os.listdir('DatabyHotel'):
         # check if it is in tripadvisor.csv
+
+    
         df = pd.read_csv('tripadvisor.csv')
         if hotelname not in df['hotelname'].values:
 

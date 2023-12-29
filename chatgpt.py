@@ -14,7 +14,7 @@ def chat_with_gpt(prompt):
         return response.choices[0].text
 
     except Exception as e:
-        print('what')
+        #print('what')
         return "                                        APIKEY not found. Please check your API key."
 
 
