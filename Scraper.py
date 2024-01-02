@@ -268,6 +268,7 @@ class Scraper:
 
             
             if self.stoppage == True and update == True:
+            
                 self.stoppage = False
                 break
 
@@ -550,6 +551,11 @@ class Scraper:
                             nextpage = driver.find_element(By.XPATH,"//a[@class='ui_button nav next primary ']")
 
                             if self.stopThread == True:
+                                print("-============================================================================================")
+                                print("-============================================================================================")
+                                print('THREAD WILL BE STOPPED AS THE TIMER HAS PASSED AND THREAD HAS BEEN STOPPED IN THREADHANDLER!')
+                                print("-============================================================================================")
+                                print("-============================================================================================")
                                 return
                             
                             nextpage.click()
@@ -589,7 +595,7 @@ class Scraper:
                 
 
 
-            #! this is to click the next page
+            #! this is to click the next page of hotels 
             time.sleep(5)
 
             try:
@@ -617,11 +623,11 @@ class Scraper:
 
                     
                 else:
-                    if(type(funcARGs) == list):
+                    if(type(funcARGs) == list): #this means the specifichotelscrape function is passed into the func argument
 
                         func(hotelname=funcARGs[0],update=funcARGs[1])
                     else:
-                        func(hotelname=funcARGs)
+                        func(hotelname=funcARGs)    #theres funtARGS but its not a list, so we just pass it in as a hotelname
                 break
             except Exception as e:
                 print(e)
@@ -631,10 +637,9 @@ class Scraper:
                 print(f'retrying {startCount} time')
                 time.sleep(5)
 
-
     def threadhandlers(self,timer=100, hotelname = None ,update = False ):
         threadlist = []
-                #scrape with 2 threads
+        #scrape with 3 threads
         if hotelname == None:
             for i in range(3):
                 thread = threading.Thread(target=self.start)
@@ -655,17 +660,18 @@ class Scraper:
 
 
         # sleep for 1s then check if stopthread has been change to true, if so we continue
+        
         for i in range(timer):
             time.sleep(1)
             if self.stopThread == True:
                 print('thread has finish completion')
                 break
             if self.threadfailCount == 9:
-                print('thread has failed 9 times')
+                print('thread has failed 9 times, the total amont of threads that we can have, so we stop the thread')
                 self.stopThread = True #! not rly useful but i wont print the timer has passed when it hasnt! 
                 break
 
-        
+        # after the timer has passed, and we left the loop, we stop the thread if it hasnt been stopped
         if self.stopThread == False:
             self.stopThread = True
             print(f'{timer} has passed and done!')
@@ -684,3 +690,8 @@ class Scraper:
 #? 4. x.threadhandlers() -> this will run the generalHotelScrape function with 3 threads
 #? 5. x.threadhandlers(hotelname = 'Amara Singapore') -> this will run the specificHotelScrape function with 3 threads, jumps when it finds a review that is already in the csv
 #? 6. x.threadhandlers(hotelname = 'Amara Singapore', update = True) -> this will run the specificHotelScrape function with 3 threads, stops when it finds a review that is already in the csv
+
+
+#x = Scraper()
+#x.threadhandlers(timer = 10)
+#x.start(func=x.specificHotelScrape,funcARGs='Amara Singapore')

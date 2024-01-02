@@ -160,6 +160,7 @@ class AnalysisReportGeneration():
         self.isTextblob = True
 
 
+
     def classy(self, df,nlp = None):
 
         #* create a filtered df for rows with no category columns
@@ -493,8 +494,8 @@ class AnalysisReportGeneration():
 
 if __name__ == '__main__':
     x = AnalysisReportGeneration()
-    x.breakdown('Aloft Singapore Novena')
-    x.testflow('Aloft Singapore Novena')
+    x.breakdown('Raffles Hotel Singapore')
+    x.testflow('Raffles Hotel Singapore')
 
 
 

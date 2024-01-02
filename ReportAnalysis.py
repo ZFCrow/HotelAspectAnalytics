@@ -158,10 +158,6 @@ class ReportAnalysis:
         interactive = mpld3.fig_to_html(fig)
 
 
-
-
-
-
         #! chatgpt
         # check if chatgpt.csv exist, only run if not
         if os.path.exists(f'DatabyHotel/{hotelname} ReviewData/OverallRegression/ChatGPT.csv'):
