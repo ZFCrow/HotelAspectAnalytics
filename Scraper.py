@@ -306,7 +306,7 @@ class Scraper:
     
 
 
-    def generalHotelScrape(self,place,headless = True):
+    def generalHotelScrape(self,place,headless = False):
         webversion = 1 #? tripadvisor renders differently on different browsers, this is to check which version it is
         #dont show the chromes
         #! implement not showing the chrome
@@ -325,6 +325,8 @@ class Scraper:
 
         
         wait = WebDriverWait(driver, 10)
+   
+
         #! uses the searchbar, then click hotel --> this will show you things other than hotels as well
         try:
 
@@ -692,6 +694,6 @@ class Scraper:
 #? 6. x.threadhandlers(hotelname = 'Amara Singapore', update = True) -> this will run the specificHotelScrape function with 3 threads, stops when it finds a review that is already in the csv
 
 
-#x = Scraper()
-#x.threadhandlers(timer = 10)
+# x = Scraper()
+# x.threadhandlers(timer = 10)
 #x.start(func=x.specificHotelScrape,funcARGs='Amara Singapore')
